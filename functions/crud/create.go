@@ -34,13 +34,13 @@ func CreateUser(db *gorm.DB, username, password string) (*user.User, error) {
 // services to be the one who updates the Status field.
 // The Public member is set to be false, denoting private by
 // default.
-func CreateVideo(db *gorm.DB, name, address string, owner uint) (*video.Video, error) {
+func CreateVideo(db *gorm.DB, name, key string, owner uint) (*video.Video, error) {
 	vid := &video.Video{
-		Name:    name,
-		Address: address,
-		Status:  video.VIDEO_UPLOADING,
-		Public:  false,
-		UserID:  owner,
+		Name:   name,
+		Key:    key,
+		Status: video.VIDEO_UPLOADING,
+		Public: false,
+		UserID: owner,
 	}
 	err := db.Create(vid).Error
 	return vid, err

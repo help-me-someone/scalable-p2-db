@@ -44,6 +44,12 @@ func GetVideoByName(db *gorm.DB, name string) (*video.Video, error) {
 	return vid, err
 }
 
+func GetVideoByKey(db *gorm.DB, key string) (*video.Video, error) {
+	vid := &video.Video{}
+	err := db.Where(&video.Video{Key: key}).First(vid).Error
+	return vid, err
+}
+
 func GetVideo(db *gorm.DB, ID uint) (*video.Video, error) {
 	vid := &video.Video{}
 	err := db.First(vid, ID).Error

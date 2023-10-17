@@ -20,7 +20,7 @@ type Video struct {
 	Name string
 
 	// The video's key in s3.
-	Address string
+	Key string
 
 	// The video's status.
 	Status uint8
