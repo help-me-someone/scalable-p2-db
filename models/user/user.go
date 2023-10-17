@@ -2,7 +2,10 @@
 
 package user
 
-import "gorm.io/gorm"
+import (
+	"github.com/help-me-someone/scalable-p2-db/models/video"
+	"gorm.io/gorm"
+)
 
 // The User model.
 type User struct {
@@ -14,4 +17,7 @@ type User struct {
 
 	// The user's hashed password.
 	HashedPassword string
+
+	// Videos owned by the user.
+	Videos []video.Video
 }

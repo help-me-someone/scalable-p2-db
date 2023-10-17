@@ -9,18 +9,18 @@ import (
 	"log"
 
 	"github.com/help-me-someone/scalable-p2-db/models/user"
+	"github.com/help-me-someone/scalable-p2-db/models/video"
 	"gorm.io/gorm"
 )
 
-// InitUserTable creates the user table in the database. This function will check for the existence
-// of the table first, only if the table DOES NOT EXIST, it will create it, otherwise it will do nothing.
-func InitUserTable(db *gorm.DB) {
+// InitTables creates the user and video table in the database.
+func InitTables(db *gorm.DB) {
 	if db == nil {
 		log.Panic("Database is invalid.")
 	}
 
-	// Migrate the schema
-	err := db.AutoMigrate(&user.User{})
+	// Migrate the models.
+	err := db.AutoMigrate(&user.User{}, &video.Video{})
 	if err != nil {
 		log.Panic("Failed to migrate User table.")
 	}
