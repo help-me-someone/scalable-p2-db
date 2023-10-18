@@ -20,13 +20,12 @@ func GetUser(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	}
 
 	username := p.ByName("username")
-
 	usr, err := crud.GetUserByName(connection, username)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		response.Encode(map[string]interface{}{
 			"success": false,
-			"message": "Could not find user by username.",
+			"message": "User not found.",
 		})
 		return
 	}
