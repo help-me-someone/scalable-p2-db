@@ -13,11 +13,16 @@ type User struct {
 	gorm.Model
 
 	// The user's username.
-	Username string
+	Username string `json:"username"`
 
 	// The user's hashed password.
-	HashedPassword string
+	HashedPassword string `json:"hashed_password,omitempty"`
 
 	// Videos owned by the user.
-	Videos []video.Video
+	Videos []video.Video `json:"videos,omitempty"`
+}
+
+type UserAPI struct {
+	Username string `json:"username"`
+	ID       uint   `json:"id,omitempty"`
 }

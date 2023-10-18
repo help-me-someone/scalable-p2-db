@@ -17,17 +17,17 @@ type Video struct {
 	gorm.Model
 
 	// The video's name.
-	Name string
+	Name string `json:"name"`
 
 	// The video's key in s3.
-	Key string
+	Key string `json:"key"`
 
 	// The video's status.
-	Status uint8
+	Status uint8 `json:"status"`
 
 	// Public status.
-	Public bool
+	Public bool `json:"public"`
 
 	// Owner ID.
-	UserID uint
+	UserID uint `json:"user_id"`
 }

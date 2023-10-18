@@ -3,7 +3,7 @@
 // On initial startup, this fill will also initialize the part of the database which it requires.
 // This isn't exactly idea but it will have to work for now.
 
-package db
+package main
 
 import (
 	"log"
