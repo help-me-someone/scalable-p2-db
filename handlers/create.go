@@ -74,9 +74,9 @@ func CreateVideo(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	}
 
 	videoInfo := struct {
-		Name    string `json:"name"`
-		Key     string `json:"key"`
-		OwnerID *uint  `json:"owner_id"`
+		Name      string `json:"name"`
+		Key       string `json:"key"`
+		OwnerName string `json:"owner_name"`
 	}{}
 	err = json.NewDecoder(r.Body).Decode(&videoInfo)
 	if err != nil {
@@ -90,7 +90,7 @@ func CreateVideo(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 
 	keyEmpty := len(videoInfo.Key) == 0
 	nameEmpty := len(videoInfo.Name) == 0
-	ownerIDEmpty := videoInfo.OwnerID == nil
+	ownerIDEmpty := len(videoInfo.OwnerName) == 0
 
 	// Username/Password not given.
 	if keyEmpty || nameEmpty || ownerIDEmpty {
@@ -102,8 +102,19 @@ func CreateVideo(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 		return
 	}
 
+	// Retrieve the user.
+	usr, err := crud.GetUserByName(connection, videoInfo.OwnerName)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		response.Encode(map[string]interface{}{
+			"success": false,
+			"message": "User not found.",
+		})
+		return
+	}
+
 	// // Create the entry.
-	_, err = crud.CreateVideo(connection, videoInfo.Name, videoInfo.Key, *videoInfo.OwnerID)
+	_, err = crud.CreateVideo(connection, videoInfo.Name, videoInfo.Key, usr.ID)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		response.Encode(map[string]interface{}{

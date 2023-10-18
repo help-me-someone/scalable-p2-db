@@ -40,13 +40,13 @@ func main() {
 	router := httprouter.New()
 
 	router.GET("/user/:username", cmw.Attach(handlers.GetUser))
-	router.GET("/user/:username/videos", cmw.Attach(handlers.GetUser))
+	router.GET("/user/:username/videos", cmw.Attach(handlers.GetUserVideos))
 	router.GET("/video/:key", cmw.Attach(handlers.GetVideo))
 
 	// Expects: "username", "hashed_password" in JSON.
 	router.POST("/user", cmw.Attach(handlers.CreateUser))
 
-	// Expects: "key", "name", "owner_id" in JSON.
+	// Expects: "key", "name", "owner_name" in JSON.
 	router.POST("/video/", cmw.Attach(handlers.CreateVideo))
 
 	// Add CORS support (Cross Origin Resource Sharing)
