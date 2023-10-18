@@ -25,7 +25,7 @@ func CreateUser(db *gorm.DB, username, password string) (*user.User, error) {
 }
 
 /*----------------------
-|  Section
+|  Video
 -----------------------*/
 
 // CreateVideo inserts a new entry into the video table.

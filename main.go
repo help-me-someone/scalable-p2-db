@@ -38,8 +38,11 @@ func main() {
 	}
 
 	router := httprouter.New()
+	router.GET("/user/:username/videos", cmw.Attach(handlers.GetUser))
 	router.GET("/user/:username", cmw.Attach(handlers.GetUser))
 	router.POST("/user", cmw.Attach(handlers.CreateUser))
+	router.GET("/video/:key", cmw.Attach(handlers.GetVideo))
+	router.POST("/video/", cmw.Attach(handlers.CreateVideo))
 
 	// Add CORS support (Cross Origin Resource Sharing)
 	handler := cors.Default().Handler(router)
