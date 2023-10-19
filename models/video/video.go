@@ -30,4 +30,7 @@ type Video struct {
 
 	// Owner ID.
 	UserID uint `json:"user_id"`
+
+	// Views.
+	Views uint `json:"views"`
 }

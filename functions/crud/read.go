@@ -3,6 +3,8 @@
 package crud
 
 import (
+	"fmt"
+
 	"github.com/help-me-someone/scalable-p2-db/models/user"
 	"github.com/help-me-someone/scalable-p2-db/models/video"
 	"gorm.io/gorm"
@@ -30,8 +32,23 @@ func GetUser(db *gorm.DB, ID uint) (*user.User, error) {
 // GetUserVideos returns the list of videos the user owns.
 func GetUserVideos(db *gorm.DB, userID uint) ([]video.Video, error) {
 	videos := make([]video.Video, 0)
-	db.Where("user_id=?", userID).Find(&video.Video{}).Scan(&videos)
-	return videos, nil
+	err := db.Where("user_id=?", userID).Find(&videos).Error
+	return videos, err
+}
+
+// GetTopPopularVideos returns the list of videos which are top ranked in terms of views.
+// For N resutls queried, it returns [start:start+amount].
+func GetTopPopularVideos(db *gorm.DB, page, amount int) ([]video.Video, error) {
+	query := fmt.Sprintf("SELECT * FROM videos ORDER BY views LIMIT %d OFFSET %d", amount, page)
+	videos := make([]video.Video, 0)
+	err := db.Raw(query).Find(&videos).Error
+	return videos, err
+}
+
+func GetUserVideo(db *gorm.DB, videoName string, userID uint) (*video.Video, error) {
+	video := &video.Video{}
+	err := db.Where("user_id=? AND name=?", userID, videoName).First(video).Error
+	return video, err
 }
 
 /*----------------------
