@@ -41,7 +41,7 @@ func main() {
 
 	router.GET("/user/:username", cmw.Attach(handlers.GetUser))
 	router.GET("/user/:username/videos", cmw.Attach(handlers.GetUserVideos))
-	router.GET("/user/:username/videos/:video", cmw.Attach(handlers.GetUserVideos))
+	router.GET("/user/:username/videos/:video", cmw.Attach(handlers.GetUserVideo))
 
 	// Returns the most popular videos.
 	router.GET("/popular/:amount/:page", cmw.Attach(handlers.GetTopPopularVideos))

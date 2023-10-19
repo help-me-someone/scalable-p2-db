@@ -114,7 +114,7 @@ func GetUserVideo(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	}
 
 	w.WriteHeader(http.StatusOK)
-	response.Encode(map[string]interface{}{
+	json.NewEncoder(w).Encode(map[string]interface{}{
 		"success": true,
 		"message": "Found videos.",
 		"video":   vid,

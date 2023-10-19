@@ -47,7 +47,8 @@ func GetTopPopularVideos(db *gorm.DB, page, amount int) ([]video.VideoWithUserEn
 
 func GetUserVideo(db *gorm.DB, videoName string, userID uint) (*video.Video, error) {
 	video := &video.Video{}
-	err := db.Where("user_id=? AND name=?", userID, videoName).First(video).Error
+	query := fmt.Sprintf("SELECT * FROM videos WHERE videos.user_id = %d AND videos.key = '%s'", userID, videoName)
+	err := db.Raw(query).First(video).Error
 	return video, err
 }
 
