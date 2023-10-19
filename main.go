@@ -47,12 +47,13 @@ func main() {
 	router.GET("/popular/:amount/:page", cmw.Attach(handlers.GetTopPopularVideos))
 
 	router.GET("/video/:key", cmw.Attach(handlers.GetVideo))
+	router.GET("/rank/video/:rank", cmw.Attach(handlers.GetVideoByRank))
 
 	// Expects: "username", "hashed_password" in JSON.
 	router.POST("/user", cmw.Attach(handlers.CreateUser))
 
 	// Expects: "key", "name", "owner_name" in JSON.
-	router.POST("/video/", cmw.Attach(handlers.CreateVideo))
+	router.POST("/video", cmw.Attach(handlers.CreateVideo))
 
 	// Add CORS support (Cross Origin Resource Sharing)
 	handler := cors.Default().Handler(router)

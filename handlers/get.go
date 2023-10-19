@@ -151,6 +151,38 @@ func GetVideo(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	})
 }
 
+func GetVideoByRank(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	response, connection, err := PrepareHandler(w, r)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(w).Encode(map[string]interface{}{
+			"success": false,
+			"message": "Could not connect to the database.",
+		})
+		return
+	}
+
+	rankStr := p.ByName("rank")
+	rank, _ := strconv.Atoi(rankStr)
+
+	vid, err := crud.GetVideoByRank(connection, rank)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		response.Encode(map[string]interface{}{
+			"success": false,
+			"message": "Video not found.",
+		})
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	response.Encode(map[string]interface{}{
+		"success": true,
+		"message": "Video found.",
+		"video":   vid,
+	})
+}
+
 func GetTopPopularVideos(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	response, connection, err := PrepareHandler(w, r)
 	if err != nil {
