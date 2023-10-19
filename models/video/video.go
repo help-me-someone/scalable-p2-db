@@ -34,3 +34,17 @@ type Video struct {
 	// Views.
 	Views uint `json:"views"`
 }
+
+type VideoWithUserEntry struct {
+	// The video's name.
+	Name string `json:"name"`
+
+	// The video's key in s3.
+	Key string `json:"key"`
+
+	// The owner's name.
+	Username string `json:"username"`
+
+	// Views.
+	Views uint `json:"views"`
+}
