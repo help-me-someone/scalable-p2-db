@@ -183,6 +183,23 @@ func GetVideoByRank(w http.ResponseWriter, r *http.Request, p httprouter.Params)
 	})
 }
 
+func WhoAmIVideosHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	response, connection, err := PrepareHandler(w, r)
+	// TODO: Remove this
+	_ = connection
+
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		response.Encode(map[string]interface{}{
+			"success": false,
+			"message": "Could not connect to the database.",
+		})
+		return
+	}
+
+	//
+}
+
 func GetTopPopularVideos(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	response, connection, err := PrepareHandler(w, r)
 	if err != nil {
