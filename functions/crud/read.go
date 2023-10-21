@@ -36,7 +36,7 @@ func GetUserVideos(db *gorm.DB, userID uint) ([]video.Video, error) {
 	return videos, err
 }
 
-func GetUserVideoFromUsername(db *gorm.DB, username, videoKey string) ([]*video.Video, error) {
+func GetUserVideoFromUsername(db *gorm.DB, username string) ([]*video.Video, error) {
 	videos := make([]*video.Video, 0)
 	query := fmt.Sprintf("SELECT videos.* FROM videos WHERE videos.user_id IN (SELECT id FROM users WHERE username = '%s')", username)
 	err := db.Raw(query).Find(&videos).Error
