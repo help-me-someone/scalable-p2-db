@@ -49,8 +49,6 @@ func main() {
 	router.GET("/video/:key", cmw.Attach(handlers.GetVideo))
 	router.GET("/rank/video/:rank", cmw.Attach(handlers.GetVideoByRank))
 
-	router.GET("/whoami/videos", cmw.Attach(handlers.WhoAmIVideosHandler))
-
 	// Expects: "username", "hashed_password" in JSON.
 	router.POST("/user", cmw.Attach(handlers.CreateUser))
 
