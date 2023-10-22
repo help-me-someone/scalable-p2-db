@@ -14,8 +14,16 @@ func UpdateVideoStatus(db *gorm.DB, videoID uint, status uint8) error {
 		return err
 	}
 	vid.Status = status
-	db.Save(&vid)
-	return nil
+	return db.Save(&vid).Error
+}
+
+func UpdateVideoStatusByKey(db *gorm.DB, videoKey string, status uint8) error {
+	vid, err := GetVideoByKey(db, videoKey)
+	if err != nil {
+		return err
+	}
+	vid.Status = status
+	return db.Save(&vid).Error
 }
 
 func UpdateVideoPrivacy(db *gorm.DB, videoID uint, public bool) error {
