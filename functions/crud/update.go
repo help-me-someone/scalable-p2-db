@@ -32,6 +32,15 @@ func UpdateVideoPrivacy(db *gorm.DB, videoID uint, public bool) error {
 		return err
 	}
 	vid.Public = public
-	db.Save(&vid)
-	return nil
+	return db.Save(&vid).Error
+}
+
+// Let's just say that views can only go up...
+func UpdateVideoViewIncrement(db *gorm.DB, videoID uint) error {
+	vid, err := GetVideo(db, videoID)
+	if err != nil {
+		return err
+	}
+	vid.Views += 1
+	return db.Save(&vid).Error
 }
