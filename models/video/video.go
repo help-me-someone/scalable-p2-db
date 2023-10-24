@@ -8,6 +8,8 @@ import "gorm.io/gorm"
 const (
 	VIDEO_UPLOADING uint8 = iota
 	VIDEO_CONVERTING
+	VIDEO_THUMBNAILING
+	VIDEO_CHUNKING
 	VIDEO_READY
 )
 
