@@ -6,8 +6,7 @@ import "gorm.io/gorm"
 
 // Enums representing video status
 const (
-	VIDEO_UPLOADING uint8 = iota
-	VIDEO_CONVERTING
+	VIDEO_CONVERTING uint8 = iota
 	VIDEO_THUMBNAILING
 	VIDEO_CHUNKING
 	VIDEO_READY
