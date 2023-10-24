@@ -26,6 +26,19 @@ func UpdateVideoStatusByKey(db *gorm.DB, videoKey string, status uint8) error {
 	return db.Save(&vid).Error
 }
 
+// I think that this is horrible but this is the only easy way I can
+// think of to be able to keep track of the video status with async
+// jobs. I could probably improve this if I were to read more into
+// asynq docs.
+func UpdateVideoStatusIncrementByKey(db *gorm.DB, videoKey string) error {
+	vid, err := GetVideoByKey(db, videoKey)
+	if err != nil {
+		return err
+	}
+	vid.Status += 1
+	return db.Save(&vid).Error
+}
+
 func UpdateVideoPrivacy(db *gorm.DB, videoID uint, public bool) error {
 	vid, err := GetVideo(db, videoID)
 	if err != nil {
