@@ -38,7 +38,7 @@ func CreateVideo(db *gorm.DB, name, key string, owner uint) (*video.Video, error
 	vid := &video.Video{
 		Name:   name,
 		Key:    key,
-		Status: video.VIDEO_UPLOADING,
+		Status: video.VIDEO_CONVERTING,
 		Public: false,
 		UserID: owner,
 	}
