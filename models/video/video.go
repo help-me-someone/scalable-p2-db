@@ -36,6 +36,21 @@ type Video struct {
 	Views uint `json:"views"`
 }
 
+type VideoLikes struct {
+	// ID, CreatedAt, UpdatedAt, DeletedAt.
+	gorm.Model
+
+	// VideoID foreign key.
+	VideoID uint `json:"video_id"`
+
+	// UserID foreign key.
+	UserID uint `json:"user_id"`
+
+	// Dictates whether the user liked
+	// the video or not.
+	Like bool `json:"like"`
+}
+
 type VideoWithUserEntry struct {
 	// The video's name.
 	Name string `json:"name"`

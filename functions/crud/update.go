@@ -57,3 +57,13 @@ func UpdateVideoViewIncrement(db *gorm.DB, videoID uint) error {
 	vid.Views += 1
 	return db.Save(&vid).Error
 }
+
+// Toggle like. If on then off, vice versa.
+func UpdateToggleVideoLike(db *gorm.DB, user_id, video_id uint) error {
+	videoLike, err := GetVideoLike(db, user_id, video_id)
+	if err != nil {
+		return err
+	}
+	videoLike.Like = !videoLike.Like
+	return db.Save(&videoLike).Error
+}

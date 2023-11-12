@@ -45,3 +45,17 @@ func CreateVideo(db *gorm.DB, name, key string, owner uint) (*video.Video, error
 	err := db.Create(vid).Error
 	return vid, err
 }
+
+/*----------------------
+|  Video Likes
+-----------------------*/
+
+func CreateVideoLike(db *gorm.DB, video_id, user_id uint, like bool) (*video.VideoLikes, error) {
+	vidLike := &video.VideoLikes{
+		VideoID: video_id,
+		UserID:  user_id,
+		Like:    like,
+	}
+	err := db.Create(vidLike).Error
+	return vidLike, err
+}

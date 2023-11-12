@@ -20,7 +20,7 @@ func InitTables(db *gorm.DB) {
 	}
 
 	// Migrate the models.
-	err := db.AutoMigrate(&user.User{}, &video.Video{})
+	err := db.AutoMigrate(&user.User{}, &video.Video{}, &video.VideoLikes{})
 	if err != nil {
 		log.Panic("Failed to migrate User table.")
 	}
