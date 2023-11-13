@@ -128,6 +128,7 @@ func GetVideoLikeCount(db *gorm.DB, video_id uint) int64 {
 	var count int64 = 0
 	db.Model(&video.VideoLikes{}).Where(&video.VideoLikes{
 		VideoID: video_id,
+		Like:    true,
 	}).Count(&count)
 	return count
 }
