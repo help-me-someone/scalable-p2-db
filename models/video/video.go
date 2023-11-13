@@ -2,7 +2,11 @@
 
 package video
 
-import "gorm.io/gorm"
+import (
+	"time"
+
+	"gorm.io/gorm"
+)
 
 // Enums representing video status
 const (
@@ -49,6 +53,23 @@ type VideoLikes struct {
 	// Dictates whether the user liked
 	// the video or not.
 	Like bool `json:"like"`
+}
+
+type VideoComments struct {
+	// ID, CreatedAt, UpdatedAt, DeletedAt.
+	ID uint `gorm:"primarykey" json:"id"`
+
+	// VideoID foreign key.
+	VideoID uint `json:"video_id"`
+
+	// UserID foreign key.
+	UserID uint `json:"user_id"`
+
+	// The comment body.
+	Comment string `json:"comment"`
+
+	// When the comment was created.
+	Date time.Time `json:"date"`
 }
 
 type VideoWithUserEntry struct {
