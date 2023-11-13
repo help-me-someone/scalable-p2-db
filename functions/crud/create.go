@@ -3,6 +3,8 @@
 package crud
 
 import (
+	"time"
+
 	"github.com/help-me-someone/scalable-p2-db/models/user"
 	"github.com/help-me-someone/scalable-p2-db/models/video"
 	"gorm.io/gorm"
@@ -58,4 +60,19 @@ func CreateVideoLike(db *gorm.DB, video_id, user_id uint, like bool) (*video.Vid
 	}
 	err := db.Create(vidLike).Error
 	return vidLike, err
+}
+
+/*----------------------
+|  Video Comments
+-----------------------*/
+
+func CreateVideoComment(db *gorm.DB, video_id, user_id uint, comment string) (*video.VideoComments, error) {
+	vidComment := &video.VideoComments{
+		VideoID: video_id,
+		UserID:  user_id,
+		Comment: comment,
+		Date:    time.Now(),
+	}
+	err := db.Create(vidComment).Error
+	return vidComment, err
 }

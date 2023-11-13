@@ -132,3 +132,14 @@ func GetVideoLikeCount(db *gorm.DB, video_id uint) int64 {
 	}).Count(&count)
 	return count
 }
+
+/*----------------------
+|  Video Comments
+-----------------------*/
+
+func GetTopVideoComments(db *gorm.DB, video_id uint, page, amount int) ([]video.VideoComments, error) {
+	query := fmt.Sprintf("SELECT * FROM video_comments WHERE video_comments.video_id = %d ORDER BY video_comments.date DESC LIMIT %d OFFSET %d", video_id, amount, page)
+	entries := make([]video.VideoComments, 0)
+	err := db.Raw(query).Find(&entries).Error
+	return entries, err
+}
