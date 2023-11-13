@@ -101,13 +101,11 @@ func GetVideoByRank(db *gorm.DB, rank int) (*video.VideoWithUserEntry, error) {
 
 func GetVideoLikeFromName(db *gorm.DB, username, videoname string) (*video.VideoLikes, error) {
 	usr, err := GetUserByName(db, username)
-
 	if err != nil {
 		return nil, err
 	}
 
 	video, err := GetVideoByName(db, videoname)
-
 	if err != nil {
 		return nil, err
 	}
@@ -122,4 +120,12 @@ func GetVideoLike(db *gorm.DB, user_id, video_id uint) (*video.VideoLikes, error
 		UserID:  user_id,
 	}).First(videoLike).Error
 	return videoLike, err
+}
+
+func GetVideoLikeCount(db *gorm.DB, video_id uint) int64 {
+	var count int64 = 0
+	db.Model(&video.VideoLikes{}).Where(&video.VideoLikes{
+		VideoID: video_id,
+	}).Count(&count)
+	return count
 }
