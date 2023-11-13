@@ -72,7 +72,9 @@ func GetUserVideo(db *gorm.DB, videoName string, userID uint) (*video.Video, err
 
 func GetVideoByName(db *gorm.DB, name string) (*video.Video, error) {
 	vid := &video.Video{}
-	err := db.Where(&video.Video{Name: name}).First(vid).Error
+	err := db.Where(&video.Video{
+		Name: name,
+	}).First(vid).Error
 	return vid, err
 }
 
@@ -105,7 +107,7 @@ func GetVideoLikeFromName(db *gorm.DB, username, videoname string) (*video.Video
 		return nil, err
 	}
 
-	video, err := GetVideoByName(db, videoname)
+	video, err := GetVideoByKey(db, videoname)
 	if err != nil {
 		return nil, err
 	}
