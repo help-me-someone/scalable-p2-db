@@ -86,12 +86,23 @@ type VideoWithUserEntry struct {
 	Views uint `json:"views"`
 }
 
+type NotificationType uint
+
+const (
+	Like NotificationType = iota
+	Comment
+)
+
+// Note(Appy): The message is expected to be constructed, not stored (waste of space).
 type VideoNotifications struct {
 	// ID, CreatedAt, UpdatedAt, DeletedAt.
 	ID uint `gorm:"primarykey" json:"id"`
 
 	// VideoID foreign key.
 	VideoID uint `json:"video_id"`
+
+	// The actor who caused the notification.
+	ActorID uint `json:"actor_id"`
 
 	// UserID foreign key.
 	UserID uint `json:"user_id"`
@@ -100,7 +111,7 @@ type VideoNotifications struct {
 	Read bool `json:"read"`
 
 	// A message describing what caused the notification.
-	Message string `json:"message"`
+	Type NotificationType `json:"type"`
 }
 
 type Recipient struct {
