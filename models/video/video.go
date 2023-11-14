@@ -98,6 +98,9 @@ type VideoNotifications struct {
 
 	// Whether the notification has been read.
 	Read bool `json:"read"`
+
+	// A message describing what caused the notification.
+	Message string `json:"message"`
 }
 
 type Recipient struct {
