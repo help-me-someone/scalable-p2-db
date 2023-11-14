@@ -17,14 +17,46 @@ import (
 func InitTables(db *gorm.DB) {
 	if db == nil {
 		log.Panic("Database is invalid.")
+		return
 	}
 
-	// Migrate the models.
-	err := db.AutoMigrate(
-		&user.User{},
-		&video.Video{},
-		&video.VideoLikes{},
-		&video.VideoComments{})
+	var err error = nil
+
+	if !db.Migrator().HasTable(&user.User{}) {
+		dberr := db.AutoMigrate(&user.User{})
+		if err == nil {
+			err = dberr
+		}
+	}
+
+	if !db.Migrator().HasTable(&video.Video{}) {
+		dberr := db.AutoMigrate(&video.Video{})
+		if err == nil {
+			err = dberr
+		}
+	}
+
+	if !db.Migrator().HasTable(&video.VideoLikes{}) {
+		dberr := db.AutoMigrate(&video.VideoLikes{})
+		if err == nil {
+			err = dberr
+		}
+	}
+
+	if !db.Migrator().HasTable(&video.VideoComments{}) {
+		dberr := db.AutoMigrate(&video.VideoComments{})
+		if err == nil {
+			err = dberr
+		}
+	}
+
+	if !db.Migrator().HasTable(&video.VideoNotifications{}) {
+		dberr := db.AutoMigrate(&video.VideoNotifications{})
+		if err == nil {
+			err = dberr
+		}
+	}
+
 	if err != nil {
 		log.Panic("Failed to migrate User table.")
 	}
