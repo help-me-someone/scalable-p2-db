@@ -162,7 +162,7 @@ func GetVideoNotificiationRecipients(db *gorm.DB, video_id uint) ([]video.Recipi
 		WHERE video_comments.video_id = ?
 	`
 
-	err := db.Raw(sql, video_id).Scan(&users).Error
+	err := db.Raw(sql, video_id, video_id).Scan(&users).Error
 	if err != nil {
 		return nil, err
 	}
