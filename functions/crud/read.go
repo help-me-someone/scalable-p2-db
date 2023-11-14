@@ -143,3 +143,36 @@ func GetTopVideoComments(db *gorm.DB, video_id uint, page, amount int) ([]video.
 	err := db.Raw(query).Find(&entries).Error
 	return entries, err
 }
+
+/*----------------------
+|  Video Notification
+-----------------------*/
+
+func GetVideoNotificiationRecipients(db *gorm.DB, video_id uint) ([]video.Recipient, error) {
+	users := make([]video.Recipient, 0)
+
+	// Get everyone who liked the video.
+	sql := `
+		SELECT DISTINCT user_id
+		FROM video_likes
+		WHERE video_likes.video_id = ? AND video_likes.like = true
+		UNION
+		SELECT DISTINCT user_id
+		FROM video_comments
+		WHERE video_comments.video_id = ?
+	`
+
+	err := db.Raw(sql, video_id).Scan(&users).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return users, nil
+}
+
+func GetNotification(db *gorm.DB, video_id, user_id uint) (*video.VideoNotifications, error) {
+	entry := &video.VideoNotifications{}
+	query := fmt.Sprintf("SELECT * FROM video_notifications WHERE video_notifications.video_id = %d AND video_notifications.user_id = %d", video_id, user_id)
+	err := db.Raw(query).Find(&entry).Error
+	return entry, err
+}

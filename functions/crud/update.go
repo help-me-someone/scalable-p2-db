@@ -67,3 +67,16 @@ func UpdateToggleVideoLike(db *gorm.DB, user_id, video_id uint) error {
 	videoLike.Like = !videoLike.Like
 	return db.Save(&videoLike).Error
 }
+
+/*----------------------
+|  Video Notification
+-----------------------*/
+
+func UpdateNotificationAsRead(db *gorm.DB, user_id, video_id uint) error {
+	notif, err := GetNotification(db, video_id, user_id)
+	if err != nil {
+		return err
+	}
+	notif.Read = true
+	return db.Save(&notif).Error
+}

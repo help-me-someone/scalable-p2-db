@@ -85,3 +85,21 @@ type VideoWithUserEntry struct {
 	// Views.
 	Views uint `json:"views"`
 }
+
+type VideoNotifications struct {
+	// ID, CreatedAt, UpdatedAt, DeletedAt.
+	ID uint `gorm:"primarykey" json:"id"`
+
+	// VideoID foreign key.
+	VideoID uint `json:"video_id"`
+
+	// UserID foreign key.
+	UserID uint `json:"user_id"`
+
+	// Whether the notification has been read.
+	Read bool `json:"read"`
+}
+
+type Recipient struct {
+	UserID uint `json:"user_id"`
+}

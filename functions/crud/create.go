@@ -76,3 +76,17 @@ func CreateVideoComment(db *gorm.DB, video_id, user_id uint, comment string) (*v
 	err := db.Create(vidComment).Error
 	return vidComment, err
 }
+
+/*----------------------
+|  Video Notification
+-----------------------*/
+
+func CreateVideoNotification(db *gorm.DB, video_id, user_id uint) (*video.VideoNotifications, error) {
+	vidNotif := &video.VideoNotifications{
+		VideoID: video_id,
+		UserID:  user_id,
+		Read:    false,
+	}
+	err := db.Create(vidNotif).Error
+	return vidNotif, err
+}
