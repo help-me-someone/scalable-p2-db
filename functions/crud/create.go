@@ -88,6 +88,7 @@ func CreateVideoNotification(db *gorm.DB, video_id, actor_id, user_id uint, noti
 		UserID:  user_id,
 		Read:    false,
 		Type:    notification_type,
+		Date:    time.Now(),
 	}
 	err := db.Create(vidNotif).Error
 	return vidNotif, err
