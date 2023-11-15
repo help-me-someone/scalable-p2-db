@@ -53,7 +53,7 @@ func GetUserVideoFromUsername(db *gorm.DB, username, videoKey string) (*video.Vi
 // GetTopPopularVideos returns the list of videos which are top ranked in terms of views.
 // For N resutls queried, it returns [start:start+amount].
 func GetTopPopularVideos(db *gorm.DB, page, amount int) ([]video.VideoWithUserEntry, error) {
-	query := fmt.Sprintf("SELECT * FROM users, videos WHERE users.id = videos.user_id ORDER BY videos.views DESC, videos.id LIMIT %d OFFSET %d", amount, page)
+	query := fmt.Sprintf("SELECT videos.id AS video_id, videos.name AS name, videos.key AS 'key', users.username AS username, videos.views AS views FROM users, videos WHERE users.id = videos.user_id ORDER BY videos.views DESC, videos.id LIMIT %d OFFSET %d", amount, page)
 	entries := make([]video.VideoWithUserEntry, 0)
 	err := db.Raw(query).Find(&entries).Error
 	return entries, err
