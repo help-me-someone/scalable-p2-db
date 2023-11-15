@@ -73,6 +73,9 @@ type VideoComments struct {
 }
 
 type VideoWithUserEntry struct {
+	// VideoID foreign key.
+	VideoID uint `json:"video_id"`
+
 	// The video's name.
 	Name string `json:"name"`
 
