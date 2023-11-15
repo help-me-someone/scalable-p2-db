@@ -112,6 +112,9 @@ type VideoNotifications struct {
 
 	// A message describing what caused the notification.
 	Type NotificationType `json:"type"`
+
+	// When the notification was made.
+	Date time.Time `json:"date"`
 }
 
 type Recipient struct {
